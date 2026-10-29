@@ -7,7 +7,8 @@
 const http = require('http'), fs = require('fs'), path = require('path'), crypto = require('crypto');
 
 const PORT = +process.env.PORT || 8080;
-const GAME = path.join(__dirname, 'index.html');
+// the game page: index.html, or else any .html file next to this one (so a downloaded "Dust Kings.html" works as is)
+const gameFile = () => { if (fs.existsSync(path.join(__dirname, 'index.html'))) return path.join(__dirname, 'index.html'); const h = fs.readdirSync(__dirname).filter(f => /\.html?$/i.test(f)).sort(); return h.length ? path.join(__dirname, h[0]) : path.join(__dirname, 'index.html'); };
 const MAX_ROOM = 8, MAX_ROOMS = 300, MAX_MSG = 64 * 1024;
 
 // ---------------- static files ----------------
@@ -15,7 +16,7 @@ const server = http.createServer((req, res) => {
   const u = req.url.split('?')[0];
   if (u === '/healthz') { res.writeHead(200, { 'content-type': 'text/plain' }); res.end('ok'); return; }
   if (u === '/' || u === '/index.html') {
-    fs.readFile(GAME, (err, buf) => {
+    fs.readFile(gameFile(), (err, buf) => {
       if (err) { res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' }); res.end('<!doctype html><meta charset=utf-8><title>Dust Kings server</title><body style="font:16px system-ui;background:#14110d;color:#efe3cb;padding:40px"><h1>Dust Kings server is running</h1><p>Open the game, click <b>Online</b>, and create or join a room. This address relays the races.</p>'); return; }
       res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-cache' }); res.end(buf);
     });
