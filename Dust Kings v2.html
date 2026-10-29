@@ -406,7 +406,7 @@ details.more{margin:10px 0}details.more summary{cursor:pointer;font:800 12px var
    <button class="tile st" style="--i:3" data-go="race"><b>Quick race</b><small>Free stages and the daily course</small><i>▸</i></button>
    <button class="tile st" style="--i:4" data-go="garage"><b>Garage</b><small>Build, tune, repair and paint your truck</small><i>▸</i></button>
    <button class="tile st" style="--i:5" data-go="dealer"><b>Dealership</b><small>Buy your way up from a prerunner</small><i>▸</i></button>
-   <div class="trow st" style="--i:6"><button class="tile mini" data-go="online"><b>Online</b><span class="soonb">Soon</span></button><button class="tile mini" data-go="edit"><b>Editor</b></button><button class="tile mini" data-go="spon"><b>Sponsors</b></button><button class="tile mini" data-go="records"><b>Records</b></button><button class="tile mini" data-go="settings"><b>Settings</b></button></div>
+   <div class="trow st" style="--i:6"><button class="tile mini" data-go="online"><b>Online</b></button><button class="tile mini" data-go="edit"><b>Editor</b></button><button class="tile mini" data-go="spon"><b>Sponsors</b></button><button class="tile mini" data-go="records"><b>Records</b></button><button class="tile mini" data-go="settings"><b>Settings</b></button></div>
   </nav>
  </div>
  <div class="foot">↑↓ to choose · Enter to go · <button class="helpln" data-help="1">How to play</button> · v2.0</div>
@@ -2360,7 +2360,7 @@ const NET_LEN=[[2000,'2 km'],[4000,'4 km'],[8000,'8 km']],NET_TOD=['day','sunset
 const netNow=()=>Date.now()+NET.off;
 function netOpts(){const o=SV.net||(SV.net={biome:'mixed',len:4000,tod:'day',diff:.5});return o}
 function netOrigin(){const h=location.host||'';return(location.protocol==='http:'||location.protocol==='https:')&&h&&!/claude|anthropic|usercontent/i.test(h)?location.origin:''}
-const NET_HOME='';// filled in with the public server address once it's deployed
+const NET_HOME='dust-kings.onrender.com';// the public Dust Kings server
 function netDefaultServer(){return SV.set.server||netOrigin()||NET_HOME}
 function wsURL(u){u=(u||'').trim();if(!u)return'';if(!/^[a-z]+:\/\//i.test(u))u=(/^(localhost|[\d.]+)(:\d+)?(\/|$)/i.test(u)?'http://':'https://')+u;return u.replace(/^http/i,'ws').replace(/\/+$/,'').replace(/\/ws$/,'')+'/ws'}
 function netSend(o){const w=NET.ws;if(w&&w.readyState===1)try{w.send(JSON.stringify(o))}catch(e){}}
